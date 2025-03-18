@@ -5,6 +5,7 @@ import MyTest from "@/components/MyTest.vue";
 
 <template>
   <main>
+    <h1>HOME</h1>
     <MyTest/>
   </main>
 </template>
