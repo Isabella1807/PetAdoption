@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {type Pet} from "../types/pet.ts";
 import {type Ref, ref} from "vue";
-import {collection, getDocs} from 'firebase/firestore';
+import {collection, getDocs, addDoc, doc} from 'firebase/firestore';
 import {db} from "@/config/firebaseConfig.ts";
 
 
@@ -14,8 +14,16 @@ export const usePetsStore = defineStore('pets', () => {
     });
   }
 
+  const addPetsToDB = ({name, type}: Partial<Pet>) => {
+    addDoc(collection(db, 'pets'), {
+      type: "TypeHejsa",
+      name: "Navnwompwomp",
+    })
+  }
+
   return {
     pets,
-    getPetsFromDB
+    getPetsFromDB,
+    addPetsToDB
   }
 });
