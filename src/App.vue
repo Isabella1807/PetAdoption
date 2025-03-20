@@ -11,11 +11,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>App View</h1>
   <header>
       <nav class="nav">
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/test">Test</RouterLink>
+        <RouterLink to="/pets">Se alle dyr</RouterLink>
         <RouterLink to="/add">Tilføj dyr</RouterLink>
       </nav>
   </header>

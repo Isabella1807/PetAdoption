@@ -14,10 +14,15 @@ export const usePetsStore = defineStore('pets', () => {
     });
   }
 
-  const addPetsToDB = ({name, type}: Partial<Pet>) => {
+  const addPetsToDB = ({name, type, age, description}: Partial<Pet>) => {
+    console.log(name, type, age, description);
     addDoc(collection(db, 'pets'), {
-      type: "TypeHejsa",
-      name: "Navnwompwomp",
+      type,
+      name,
+      age,
+      description,
+      adopted: false,
+      createdAt: Date.now(),
     })
   }
 

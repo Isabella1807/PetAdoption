@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import {usePetsStore} from "@/stores/pets.ts";
+import PetCard from "@/components/PetCard.vue";
 
 const petsStore = usePetsStore();
 
 </script>
 
 <template>
-  <h3>MINE DYR</h3>
-  <!--  <div>
-      {{ pets }}
-    </div>-->
+  <h2>Dyr du kan adoptere</h2>
   <div v-for="pet in petsStore.pets" :key="pet.id">
-    <h1>{{ pet }}</h1>
+    <PetCard :petId="pet.id" :petName="pet.name" :petAge="pet.age"/>
   </div>
 
 

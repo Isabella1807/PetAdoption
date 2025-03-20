@@ -1,9 +1,10 @@
 <script setup lang="ts">
 
+import PetList from "@/components/PetList.vue";
 </script>
 
 <template>
-<h1>Test View</h1>
+<PetList/>
 </template>
 
 <style scoped>
