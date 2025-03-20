@@ -14,13 +14,13 @@ export const usePetsStore = defineStore('pets', () => {
     });
   }
 
-  const getPetByIdFromDB = (petId: Pet["id"]) => {
+  const getPetByIdFromDB = (petId: Pet["id"]): Promise<Pet> => new Promise((resolve, reject) => {
     getDoc(doc(db, 'pets', petId)).then((data) => {
-      console.log(data.data());
+      resolve(data.data() as Pet);
     }).catch((err) => {
-      console.log(err);
+      reject(err);
     })
-  }
+  })
 
   const addPetsToDB = ({name, type, age, description}: Partial<Pet>) => {
     console.log(name, type, age, description);
