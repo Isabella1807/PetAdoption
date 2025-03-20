@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {computed} from "vue";
+import router from "@/router";
 
 interface Props {
   petId: string,
@@ -10,11 +11,16 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const petTag = computed(() => `${props.petName}, ${props.petAge}`)
+const petTag = computed(() => `${props.petName}, ${props.petAge} år`)
+
+const goToPet = () => {
+router.push(`/pets/${props.petId}`);
+}
+
 </script>
 
 <template>
-<div class="pet-card">
+<div class="pet-card" @click="goToPet">
   <div class="pet-card__image-container">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nqz5KC9GCO4n2eJyTz2tYyzMD09PWH69Bw&s" alt="">
   </div>
@@ -28,5 +34,9 @@ const petTag = computed(() => `${props.petName}, ${props.petAge}`)
 .pet-card {
   background-color: $tester;
   border: 1px solid red;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>
