@@ -8,13 +8,14 @@ const petsStore = usePetsStore();
 
 <template>
   <h2>Dyr du kan adoptere</h2>
-  <div v-for="pet in petsStore.pets" :key="pet.id">
-    <PetCard :petId="pet.id" :petName="pet.name" :petAge="pet.age" :petCreated="pet.createdAt" :petAdopted="pet.adopted"/>
+  <div class="petCardContainer">
+    <PetCard v-for="pet in petsStore.pets" :key="pet.id" :petId="pet.id" :petName="pet.name" :petAge="pet.age" :petCreated="pet.createdAt" :petAdopted="pet.adopted"/>
   </div>
-
-
 </template>
 
 <style scoped>
-
+.petCardContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 </style>

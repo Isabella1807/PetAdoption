@@ -32,8 +32,6 @@ const date = formatDate(props.petCreated);
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nqz5KC9GCO4n2eJyTz2tYyzMD09PWH69Bw&s"
           alt="">
       </div>
-
-      <p>{{ date }}</p>
     </div>
     <div>
       <p>{{ petTag }}</p>
