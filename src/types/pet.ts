@@ -5,6 +5,6 @@ export interface Pet {
   age: number,
   description: string,
   adopted: boolean,
-  createdAt: string,
+  createdAt: number,
 
 }
