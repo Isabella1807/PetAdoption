@@ -9,7 +9,7 @@ const petsStore = usePetsStore();
 <template>
   <h2>Dyr du kan adoptere</h2>
   <div v-for="pet in petsStore.pets" :key="pet.id">
-    <PetCard :petId="pet.id" :petName="pet.name" :petAge="pet.age" :petCreated="pet.createdAt"/>
+    <PetCard :petId="pet.id" :petName="pet.name" :petAge="pet.age" :petCreated="pet.createdAt" :petAdopted="pet.adopted"/>
   </div>
 
 

@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {type Pet} from "../types/pet.ts";
 import {type Ref, ref} from "vue";
-import {collection, getDocs, addDoc, doc, getDoc, orderBy, query} from 'firebase/firestore';
+import {collection, getDocs, addDoc, doc, getDoc, orderBy, query, updateDoc} from 'firebase/firestore';
 import {db} from "@/config/firebaseConfig.ts";
 
 
@@ -25,7 +25,6 @@ export const usePetsStore = defineStore('pets', () => {
   })
 
   const addPetsToDB = ({name, type, age, description}: Partial<Pet>) => {
-    console.log(name, type, age, description);
     addDoc(collection(db, 'pets'), {
       type,
       name,
@@ -36,10 +35,19 @@ export const usePetsStore = defineStore('pets', () => {
     })
   }
 
+  const updateAdoptedStatusById = (petId: Pet["id"], status: Pet["adopted"]): Promise<void> => new Promise((resolve, reject) => {
+    updateDoc(doc(db, 'pets', petId), {adopted: status}).then((data) => {
+      resolve();
+    }).catch((err) => {
+      reject(err);
+    })
+  })
+
   return {
     pets,
     getPetsFromDB,
     addPetsToDB,
-    getPetByIdFromDB
+    getPetByIdFromDB,
+    updateAdoptedStatusById
   }
 });
