@@ -42,7 +42,6 @@ const welcomeMessage = computed(() => {
           <p>{{ pet.description }}</p>
           <p>Oprettet: {{ formatDate(pet.createdAt) }}</p>
         </div>
-
         <div class="buttonContainer">
           <button v-if="!pet.adopted" @click="updatePetStatus" class="adoptButton">
             Adoptér
@@ -51,7 +50,6 @@ const welcomeMessage = computed(() => {
 
       </div>
       <div class="petImage">
-        <p v-if="pet.adopted" class="petAdoptedTag">ADOPTERET</p>
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nqz5KC9GCO4n2eJyTz2tYyzMD09PWH69Bw&s"
           alt="">
@@ -63,36 +61,40 @@ const welcomeMessage = computed(() => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .petView {
   display: flex;
-  border: solid 1px black;
+   //border: solid 1px black;
   justify-content: center;
   width: 100%;
   height: 100%;
 
   .petContainer {
-    border: 1px solid blue;
-    .petInfo {
+    //border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
+    .petInfo {
+      margin-right: 20px;
+      //border: 1px solid red;
     }
 
     .buttonContainer {
+      //border: 1px solid yellow;
+      display: flex;
+      justify-content: center;
+
       .adoptButton {
         font-size: 16px;
-        padding: 10px 20px;
+        padding: 15px 50px;
       }
     }
-  }
 
-  .petImage {
-    position: relative;
-
-    .petAdoptedTag {
-      position: absolute;
+    .petImage {
+      position: relative;
     }
   }
-
-
 }
+
 </style>
