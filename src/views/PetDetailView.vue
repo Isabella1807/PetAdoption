@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useRoute} from "vue-router";
-import {onMounted, ref, type Ref} from "vue";
+import {computed, onMounted, ref, type Ref} from "vue";
 import {usePetsStore} from "@/stores/pets.ts";
 import type {Pet} from "@/types/pet.ts";
 import {formatDate} from "../utils/date.ts";
@@ -24,28 +24,37 @@ const updatePetStatus = () => {
   })
 }
 
-
+const welcomeMessage = computed(() => {
+  if (pet.value?.adopted) {
+    return 'Jeg er adopteret'
+  } else {
+    return `Jeg hedder ${pet.value?.name}, ${pet.value?.age} år`
+  }
+})
 </script>
 
 <template>
   <div v-if="pet">
     <div class="petView">
-      <div>
-        <div>
-          <h1>Jeg hedder {{ pet.name }}, {{pet.age}} år</h1>
-          <p>{{pet.description}}</p>
-          <p>Oprettet: {{formatDate(pet.createdAt)}}</p>
+      <div class="petContainer">
+        <div class="petInfo">
+          <h1>{{ welcomeMessage }}</h1>
+          <p>{{ pet.description }}</p>
+          <p>Oprettet: {{ formatDate(pet.createdAt) }}</p>
         </div>
 
-        <div>
-          <button v-if="!pet.adopted" @click="updatePetStatus">
+        <div class="buttonContainer">
+          <button v-if="!pet.adopted" @click="updatePetStatus" class="adoptButton">
             Adoptér
           </button>
         </div>
+
       </div>
       <div class="petImage">
         <p v-if="pet.adopted" class="petAdoptedTag">ADOPTERET</p>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nqz5KC9GCO4n2eJyTz2tYyzMD09PWH69Bw&s" alt="">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nqz5KC9GCO4n2eJyTz2tYyzMD09PWH69Bw&s"
+          alt="">
       </div>
     </div>
   </div>
@@ -55,15 +64,35 @@ const updatePetStatus = () => {
 </template>
 
 <style scoped>
-.petView{
+.petView {
   display: flex;
   border: solid 1px black;
-  .petImage{
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  .petContainer {
+    border: 1px solid blue;
+    .petInfo {
+
+    }
+
+    .buttonContainer {
+      .adoptButton {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
+    }
+  }
+
+  .petImage {
     position: relative;
-    .petAdoptedTag{
+
+    .petAdoptedTag {
       position: absolute;
     }
   }
+
 
 }
 </style>
