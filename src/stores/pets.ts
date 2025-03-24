@@ -44,8 +44,8 @@ export const usePetsStore = defineStore('pets', () => {
   const updateAdoptedStatusById = (petId: Pet["id"], status: Pet["adopted"]): Promise<void> => new Promise((resolve, reject) => {
     updateDoc(doc(db, 'pets', petId), {adopted: status}).then((data) => {
 
-      const a = pets.value.findIndex((item) => item.id === petId);
-      pets.value[a].adopted = status;
+      const petIndex = pets.value.findIndex((item) => item.id === petId);
+      pets.value[petIndex].adopted = status;
 
       resolve();
     }).catch((err) => {

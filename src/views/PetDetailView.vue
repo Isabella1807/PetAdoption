@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useRoute} from "vue-router";
-import {computed, onMounted, ref, type Ref} from "vue";
+import {computed, type ComputedRef, ref} from "vue";
 import {usePetsStore} from "@/stores/pets.ts";
 import type {Pet} from "@/types/pet.ts";
 import {formatDate} from "../utils/date.ts";
@@ -8,20 +8,19 @@ import {formatDate} from "../utils/date.ts";
 const route = useRoute();
 const petStore = usePetsStore();
 
-const pet: Ref<Pet | null> = ref(null);
 const petId = route.params.id as string;
 
-onMounted(async () => {
-  pet.value = await petStore.getPetByIdFromDB(petId);
-  console.log(pet);
-})
+const isLoading = ref(false);
+
+const pet: ComputedRef<Pet | undefined> = computed(() => {
+  return petStore.pets.find((pet) => petId === pet.id);
+});
 
 const updatePetStatus = () => {
-  petStore.updateAdoptedStatusById(petId, true).then(() => {
-    if (pet.value) {
-      pet.value.adopted = true;
-    }
-  })
+  isLoading.value = true;
+  petStore.updateAdoptedStatusById(petId, true).finally(() => {
+    isLoading.value = false;
+  });
 }
 
 const welcomeMessage = computed(() => {
@@ -30,7 +29,7 @@ const welcomeMessage = computed(() => {
   } else {
     return `Jeg hedder ${pet.value?.name}, ${pet.value?.age} år`
   }
-})
+});
 </script>
 
 <template>
@@ -43,7 +42,7 @@ const welcomeMessage = computed(() => {
           <p>Oprettet: {{ formatDate(pet.createdAt) }}</p>
         </div>
         <div class="buttonContainer">
-          <button v-if="!pet.adopted" @click="updatePetStatus" class="adoptButton">
+          <button v-if="!pet.adopted" :disabled="isLoading" @click="updatePetStatus" class="adoptButton">
             Adoptér
           </button>
         </div>
