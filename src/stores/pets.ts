@@ -18,7 +18,7 @@ export const usePetsStore = defineStore('pets', () => {
 
   const getPetByIdFromDB = (petId: Pet["id"]): Promise<Pet> => new Promise((resolve, reject) => {
     getDoc(doc(db, 'pets', petId)).then((data) => {
-      resolve(data.data() as Pet);
+      resolve({id: petId, ...data.data()} as Pet);
     }).catch((err) => {
       reject(err);
     })
@@ -32,11 +32,21 @@ export const usePetsStore = defineStore('pets', () => {
       description,
       adopted: false,
       createdAt: Date.now(),
+    }).then( async (data) => {
+      const newPet = await getPetByIdFromDB(data.id);
+      //Adds single
+      pets.value.push(newPet)
     })
+    //fetches ALL
+    //getPetsFromDB();
   }
 
   const updateAdoptedStatusById = (petId: Pet["id"], status: Pet["adopted"]): Promise<void> => new Promise((resolve, reject) => {
     updateDoc(doc(db, 'pets', petId), {adopted: status}).then((data) => {
+
+      const a = pets.value.findIndex((item) => item.id === petId);
+      pets.value[a].adopted = status;
+
       resolve();
     }).catch((err) => {
       reject(err);
